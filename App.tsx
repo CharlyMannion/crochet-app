@@ -25,8 +25,13 @@ export default function App() {
           style={createStyles.textInput}
           placeholder="Your crochet projects"
           onChangeText={goalInputHandler}
+          testID={"textInput"}
         />
-        <Button title="Add goal" onPress={addGoalHandler} />
+        <Button
+          title="Add goal"
+          onPress={addGoalHandler}
+          testID={"inputButton"}
+        />
       </View>
       <View style={createStyles.goalsContainer}>
         {crochetGoals.map((goal) => (
