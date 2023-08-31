@@ -3,8 +3,8 @@ import { FlatList, View } from "react-native";
 
 import createStyles from "./App.styles";
 
-import CrochetGoalItem from "./components/CrochetGoalItem";
-import CrochetGoalInput from "./components/CrochetGoalInput";
+import CrochetGoalItem from "./components/atoms/CrochetGoalItem/CrochetGoalItem";
+import CrochetGoalInput from "./components/molecules/CrochetGoalInput/CrochetGoalInput";
 
 interface CrochetListItem {
   text: string;
