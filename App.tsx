@@ -1,42 +1,43 @@
 import { useState } from "react";
-import { Button, Text, TextInput, View } from "react-native";
+import { FlatList, View } from "react-native";
 
 import createStyles from "./App.styles";
 
+import CrochetGoalItem from "./components/CrochetGoalItem";
+import CrochetGoalInput from "./components/CrochetGoalInput";
+
+interface CrochetListItem {
+  text: string;
+  id: string;
+}
+
+type CrochetList = CrochetListItem[];
+
 export default function App() {
-  const [enteredGoalText, setEnteredGoalText] = useState("");
-  const [crochetGoals, setCrochetGoals] = useState<string[]>([]);
+  const [crochetGoals, setCrochetGoals] = useState<CrochetList>([]);
 
-  const goalInputHandler = (enteredText: string) => {
-    setEnteredGoalText(enteredText);
-  };
-
-  const addGoalHandler = () => {
-    setCrochetGoals((currentCourseGoals) => [
-      ...currentCourseGoals,
-      enteredGoalText,
-    ]);
+  const addGoalHandler = (enteredGoalText: string) => {
+    setCrochetGoals(
+      (currentCourseGoals): CrochetList => [
+        ...currentCourseGoals,
+        { text: enteredGoalText, id: Math.random().toString() },
+      ]
+    );
   };
 
   return (
     <View style={createStyles.appContainer}>
-      <View style={createStyles.inputContainer}>
-        <TextInput
-          style={createStyles.textInput}
-          placeholder="Your crochet projects"
-          onChangeText={goalInputHandler}
-          testID={"textInput"}
-        />
-        <Button
-          title="Add goal"
-          onPress={addGoalHandler}
-          testID={"inputButton"}
-        />
-      </View>
+      <CrochetGoalInput onAddGoal={addGoalHandler} />
       <View style={createStyles.goalsContainer}>
-        {crochetGoals.map((goal) => (
-          <Text key={goal}>{goal}</Text>
-        ))}
+        <FlatList
+          data={crochetGoals}
+          renderItem={(itemData) => {
+            return <CrochetGoalItem text={itemData.item.text} />;
+          }}
+          keyExtractor={(item, index) => {
+            return item.id;
+          }}
+        />
       </View>
     </View>
   );
